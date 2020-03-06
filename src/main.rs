@@ -6,7 +6,13 @@ use std::time::Duration;
 use url::Url;
 use urlshortener::providers::ProviderError;
 
+mod tray;
+
 fn main() {
+	let tray_result = tray::create();
+	if let Err(err) = tray_result {
+		println!("{}", err);
+	}
 	let bitly_token = String::from("4107e7adbc03e75d06ec7440190896b1979c9ad0");
 	let us = UrlShortener::new().unwrap();
 	clipboard_loop(us, Provider::BitLy{token: bitly_token}).unwrap();
